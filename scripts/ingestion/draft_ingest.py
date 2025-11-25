@@ -1,11 +1,12 @@
 """
 ============================================
-Draft: Ingest Script
+Ingestion Script
 ============================================
 Script Purpose:
     This is a draft ingest script that given a folder or file of data
     will ingest it into PostgreSql with same table name as the file name,
-    drops table if already exists.
+    drops table if already exists. Edited to address csv files that are 
+    separated by '\t".
 ============================================
 """
 
@@ -15,9 +16,9 @@ import argparse
 import os
 from pathlib import Path
 
-def main():
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description='Simple Data Ingestion Pipeline')
+def ingest_data():
+    # Parse Arguments to connect to database similar to FA4
+    parser = argparse.ArgumentParser(description='Data Ingestion Script')
     parser.add_argument('--user', default='root', help='Database username (default: root)')
     parser.add_argument('--password', default='root', help='Database password (default: root)')
     parser.add_argument('--host', default='localhost', help='Database host (default: localhost)')
@@ -27,13 +28,13 @@ def main():
     
     args = parser.parse_args()
 
-    # Connect to database
+    # Connect to PostgreSQL database
     engine = create_engine(f'postgresql://{args.user}:{args.password}@{args.host}:{args.port}/{args.db}')
 
-    # Supported file extensions
-    supported_extensions = {'.csv', '.parquet', '.pkl', '.pickle', '.xlsx', '.xls', '.json', '.html'}
+    # File Extensions based on Dataset given
+    supported_extensions = ['.csv', '.parquet', '.pkl', '.pickle', '.xlsx', '.xls', '.json', '.html']
 
-    # Process each file in the directory
+    # Checking if each file can be supported based on our supported extensions
     for file_path in Path(args.data_dir).iterdir():
         if file_path.is_file() and file_path.suffix.lower() in supported_extensions:
             process_file(file_path, engine)
@@ -41,21 +42,17 @@ def main():
     print("All files processed!")
 
 def process_file(file_path, engine):
-    file_name = file_path.stem  # Get filename without extension
-    file_ext = file_path.suffix.lower()
+    file_name = file_path.stem  # Gets the filename
+    file_ext = file_path.suffix.lower() #Gets the extension
     
     print(f"Processing: {file_path.name}")
     
     try:
-        # Read file based on extension
+        # Reads the file based on extension
         if file_ext == '.parquet':
             df = pd.read_parquet(file_path)
         elif file_ext == '.csv':
-            # Try regular CSV first, then tab-separated
-            try:
-                df = pd.read_csv(file_path)
-            except:
-                df = pd.read_csv(file_path, sep='\t')
+            df = read_csv_file(file_path)
         elif file_ext in ['.xlsx', '.xls']:
             df = pd.read_excel(file_path)
         elif file_ext in ['.pkl', '.pickle']:
@@ -66,10 +63,10 @@ def process_file(file_path, engine):
             # Get first table from HTML
             df = pd.read_html(file_path)[0]
         
-        # Clean table name
+        # Cleans the table name
         table_name = file_name.lower().replace('-', '_').replace(' ', '_')
         
-        # Load to PostgreSQL
+        # Loads to PostgreSQL
         df.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
         
         print(f"✓ Loaded {len(df)} rows into table '{table_name}'")
@@ -77,6 +74,22 @@ def process_file(file_path, engine):
     except Exception as e:
         print(f"✗ Error processing {file_path.name}: {e}")
 
-if __name__ == "__main__":
-    main()
+#Function to address csv file with different separator
+def read_csv_file(file_path):
+    """Read CSV file with automatic separator detection"""
+    # Try different separators
+    separators = [',', '\t', ';', '|']
+    
+    for sep in separators:
+        try:
+            df = pd.read_csv(file_path, sep=sep, engine='python')
+            # If read with multiple columns, use this separator
+            if len(df.columns) > 1:
+                print(f"  Detected separator: {repr(sep)}")
+                return df
+        except:
+            continue
+
+#Automatically runs the function when script is called
+ingest_data()
 
