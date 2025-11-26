@@ -83,6 +83,7 @@ SELECT
 	product.product_reference_number,
 	campaign.campaign_reference_number,
 	staff.staff_reference_number,
+	merchant.merchant_reference_number,
 	o.order_id,
 	o.estimated_arrival, 
 	o.transaction_date,
