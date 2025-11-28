@@ -3,12 +3,12 @@
 Creating the Facts and Dimensions Tables
 ============================================
 Script Purpose:
-    This is a SQL script that creates the views for our 
+    This is a SQL script that creates the tables for our 
     Facts and Dimension tables based on our outline.
 ============================================
 """
 
-CREATE VIEW dim_user AS
+CREATE TABLE dim_user AS
 SELECT 
   ROW_NUMBER() OVER (ORDER BY u1.user_id) AS user_reference_number,
   u1.user_id, 
@@ -32,7 +32,7 @@ LEFT JOIN user_job AS u2
 LEFT JOIN user_credit_card AS u3
           ON u1.user_id = u3.user_id;
 
-CREATE VIEW dim_product AS
+CREATE TABLE dim_product AS
 SELECT 
 	ROW_NUMBER() OVER (ORDER BY product_id) AS product_reference_number,
   product_id, 
@@ -40,7 +40,7 @@ SELECT
   product_type
 FROM product_list;
 
-CREATE VIEW dim_campaign AS
+CREATE TABLE dim_campaign AS
 SELECT 
 	ROW_NUMBER() OVER (ORDER BY campaign_id) AS campaign_reference_number,
   campaign_id,
@@ -49,7 +49,7 @@ SELECT
   discount AS campaign_discount
 FROM campaign_data;
 
-CREATE VIEW dim_merchant AS
+CREATE TABLE dim_merchant AS
 SELECT
 	ROW_NUMBER () OVER (ORDER BY merchant_id) AS merchant_reference_number,
 	merchant_id,
@@ -62,7 +62,7 @@ SELECT
 	creation_date AS merchant_creation_date
 FROM merchant_data;
 
-CREATE VIEW dim_staff AS 
+CREATE TABLE dim_staff AS 
 SELECT
 	ROW_NUMBER () OVER (ORDER BY staff_id) AS staff_reference_number, 
 	staff_id,
@@ -76,7 +76,7 @@ SELECT
 	creation_date AS staff_creation_date
 FROM staff_data;
 
-CREATE VIEW fact_order AS
+CREATE TABLE fact_order AS
 SELECT
 	ROW_NUMBER () OVER (ORDER BY o.order_id) AS order_reference_number,
 	u.user_reference_number,
