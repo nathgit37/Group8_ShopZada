@@ -1,10 +1,10 @@
 """
 ============================================
-Creating the Facts and Dimensions Tables
+Creating the Dimensions Tables
 ============================================
 Script Purpose:
     This is a SQL script that creates the tables for our 
-    Facts and Dimension tables based on our outline.
+    Dimension tables based on our outline.
 ============================================
 """
 
