@@ -37,24 +37,24 @@ SELECT
 		ELSE 'Not Applicable' END as availed
 FROM order_data AS o
 LEFT JOIN line_item_data_prices AS l1	
-ON o.order_id = l1.order_id
+		ON o.order_id = l1.order_id
 LEFT JOIN line_item_data_products AS l2
-ON o.order_id = l2.order_id
+		ON o.order_id = l2.order_id
 LEFT JOIN order_delays AS d
-ON o.order_id = d.order_id
+		ON o.order_id = d.order_id
 LEFT JOIN transactional_campaign_data AS t
-ON o.order_id = t.order_id
+		ON o.order_id = t.order_id
 LEFT JOIN dim_user AS u
-ON o.user_id = u.user_id
+		ON o.user_id = u.user_id
 LEFT JOIN dim_product AS product
-ON l2.product_id = product.product_id
+		ON l2.product_id = product.product_id
 LEFT JOIN dim_campaign AS campaign
-ON t.campaign_id = campaign.campaign_id 
+		ON t.campaign_id = campaign.campaign_id 
 LEFT JOIN merchant_with_order_data AS oms
-ON o.order_id = oms.order_id
+		ON o.order_id = oms.order_id
 LEFT JOIN dim_staff AS staff
-ON oms.staff_id = staff.staff_id
+		ON oms.staff_id = staff.staff_id
 LEFT JOIN dim_merchant AS merchant
-ON oms.merchant_id = merchant.merchant_id;
+		ON oms.merchant_id = merchant.merchant_id;
 
 
