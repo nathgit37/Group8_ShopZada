@@ -32,6 +32,11 @@ LEFT JOIN user_job AS u2
 LEFT JOIN user_credit_card AS u3
           ON u1.user_id = u3.user_id;
 
+ALTER TABLE dim_user 
+	ADD CONSTRAINT dim_user_pk PRIMARY KEY (user_reference_number),
+	ALTER COLUMN user_reference_number SET NOT NULL,
+	ALTER COLUMN user_id SET NOT NULL;
+
 CREATE TABLE dim_product AS
 SELECT 
 	ROW_NUMBER() OVER (ORDER BY product_id) AS product_reference_number,
@@ -39,6 +44,14 @@ SELECT
   product_name, 
   product_type
 FROM product_list;
+
+ALTER TABLE dim_product 
+	ADD CONSTRAINT dim_product_pk PRIMARY KEY (product_reference_number),
+	ALTER COLUMN product_reference_number SET NOT NULL,
+	ALTER COLUMN product_id SET NOT NULL;
+
+INSERT INTO dim_product
+VALUES (-1, 'PRODUCT00000', 'No Product', 'No Product');
 
 CREATE TABLE dim_campaign AS
 SELECT 
@@ -48,6 +61,14 @@ SELECT
   campaign_description,
   discount AS campaign_discount
 FROM campaign_data;
+
+ALTER TABLE dim_campaign 
+	ADD CONSTRAINT dim_campaign_pk PRIMARY KEY (campaign_reference_number),
+	ALTER COLUMN campaign_reference_number SET NOT NULL,
+	ALTER COLUMN campaign_id SET NOT NULL;
+
+INSERT INTO dim_campaign
+VALUES (-1, 'CAMPAIGN00000', 'No Campaign', 'No Campaign', '0.0');
 
 CREATE TABLE dim_merchant AS
 SELECT
@@ -61,6 +82,11 @@ SELECT
 	contact_number AS merchant_contact_number,
 	creation_date AS merchant_creation_date
 FROM merchant_data;
+
+ALTER TABLE dim_merchant
+	ADD CONSTRAINT dim_merchant_pk PRIMARY KEY (merchant_reference_number),
+	ALTER COLUMN merchant_reference_number SET NOT NULL,
+	ALTER COLUMN merchant_id SET NOT NULL;
 
 CREATE TABLE dim_staff AS 
 SELECT
@@ -76,42 +102,12 @@ SELECT
 	creation_date AS staff_creation_date
 FROM staff_data;
 
-CREATE TABLE fact_order AS
-SELECT
-	ROW_NUMBER () OVER (ORDER BY o.order_id) AS order_reference_number,
-	u.user_reference_number,
-	product.product_reference_number,
-	campaign.campaign_reference_number,
-	staff.staff_reference_number,
-	merchant.merchant_reference_number,
-	o.order_id,
-	o.estimated_arrival, 
-	o.transaction_date,
-	l1.price,
-	l1.quantity,
-	d."delay in days",
-	t.availed 
-FROM order_data AS o
-LEFT JOIN line_item_data_prices AS l1	
-          ON o.order_id = l1.order_id
-LEFT JOIN line_item_data_products AS l2
-          ON o.order_id = l2.order_id
-LEFT JOIN order_delays AS d
-          ON o.order_id = d.order_id
-LEFT JOIN transactional_campaign_data AS t
-          ON o.order_id = t.order_id
-LEFT JOIN dim_user AS u
-          ON o.user_id = u.user_id
-LEFT JOIN dim_product AS product
-          ON l2.product_id = product.product_id
-LEFT JOIN dim_campaign AS campaign
-          ON t.campaign_id = campaign.campaign_id 
-LEFT JOIN merchant_with_order_data AS oms
-          ON o.order_id = oms.order_id
-LEFT JOIN dim_staff AS staff
-          ON oms.staff_id = staff.staff_id
-LEFT JOIN dim_merchant AS merchant
-          ON oms.merchant_id = merchant.merchant_id;
+ALTER TABLE dim_staff
+	ADD CONSTRAINT dim_staff_pk PRIMARY KEY (staff_reference_number),
+	ALTER COLUMN staff_reference_number SET NOT NULL,
+	ALTER COLUMN staff_id SET NOT NULL;
+
+
 
 
 	
