@@ -10,9 +10,6 @@ Script Purpose:
 """
 
 #Install Packages ====
-install.packages("DBI")
-install.packages("RPostgres")
-install.packages("stringr")
 library(stringr)
 library(DBI)
 library(RPostgres)
@@ -41,7 +38,7 @@ user_job <- dbGetQuery(con, "SELECT * FROM user_job;")
 
 #Replacing null with a value and removing column named "Unnamed:0"
 user_job <- user_job %>%
-  select(-`Unnamed: 0`)
+  select(-`Unnamed: 0`) %>%
   mutate(job_level = replace_na(job_level, "Student"))
   
 #Correcting data types
@@ -56,12 +53,12 @@ line_item_data_prices3 <- dbGetQuery(con, "SELECT * FROM line_item_data_prices3;
 line_item_data_products1 <- dbGetQuery(con, "SELECT * FROM line_item_data_products1;")
 line_item_data_products2 <- dbGetQuery(con, "SELECT * FROM line_item_data_products2;")
 line_item_data_products3 <- dbGetQuery(con, "SELECT * FROM line_item_data_products3;")
-order_data_20200101_20200701 <- dbGetQuery(con, "SELECT * FROM order_data_2020010120200701;")
-order_data_20200701_20211001 <- dbGetQuery(con, "SELECT * FROM order_data_2020070120211001;")
-order_data_20211001_20220101 <- dbGetQuery(con, "SELECT * FROM order_data_2021100120220101;")
-order_data_20220101_20221201 <- dbGetQuery(con, "SELECT * FROM order_data_2022010120221201;")
-order_data_20221201_20230601 <- dbGetQuery(con, "SELECT * FROM order_data_2022120120230601;")
-order_data_20230601_20240101 <- dbGetQuery(con, "SELECT * FROM order_data_2023060120240101;")
+order_data_20200101_20200701 <- dbGetQuery(con, "SELECT * FROM order_data_20200101_20200701;")
+order_data_20200701_20211001 <- dbGetQuery(con, "SELECT * FROM order_data_20200701_20211001;")
+order_data_20211001_20220101 <- dbGetQuery(con, "SELECT * FROM order_data_20211001_20220101;")
+order_data_20220101_20221201 <- dbGetQuery(con, "SELECT * FROM order_data_20220101_20221201;")
+order_data_20221201_20230601 <- dbGetQuery(con, "SELECT * FROM order_data_20221201_20230601;")
+order_data_20230601_20240101 <- dbGetQuery(con, "SELECT * FROM order_data_20230601_20240101;")
 order_delays <- dbGetQuery(con, "SELECT * FROM order_delays;")
 
 #Remove the word "days"
