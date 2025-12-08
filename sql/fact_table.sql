@@ -30,9 +30,9 @@ SELECT
 	COALESCE(l1.quantity, 0) AS quantity,
 	COALESCE(d."delay in days", 0) AS delay_in_days,
 	CASE
-		WHEN t.availed LIKE '1' 
+		WHEN t.availed = 1 
 		THEN 'Availed'
-		WHEN t.availed LIKE '0'
+		WHEN t.availed = 0
 		THEN 'Not Availed'
 		ELSE 'Not Applicable' END as availed
 FROM order_data AS o
