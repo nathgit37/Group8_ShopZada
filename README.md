@@ -1,7 +1,7 @@
 # 🛒 Group8_ShopZada
 Github repository for Group 8's ShopZada Data Warehouse
 
-## 🗃️ Repository Structure 
+## 🗃️ Directory 
 ```
 group8_shopzada/
 ├── docker-compose.yml                        # ← Provided in infra/
