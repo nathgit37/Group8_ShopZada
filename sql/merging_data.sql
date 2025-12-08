@@ -31,19 +31,19 @@ CREATE VIEW line_item_data_prices AS
 SELECT 
 	order_id, 
 	price,
-	quantity,
+	quantity
 FROM line_item_data_prices1
 UNION
 SELECT
 order_id, 
 	price,
-	quantity,
+	quantity
 FROM line_item_data_prices2
 UNION
 SELECT
 order_id, 
 	price,
-	quantity,
+	quantity
 FROM line_item_data_prices3;
 
 CREATE VIEW line_item_data_products AS
