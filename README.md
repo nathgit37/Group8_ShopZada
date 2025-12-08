@@ -25,7 +25,7 @@ group8_shopzada/
 │   └── create_dims.sql                       # ← Provided in sql/
 ```
 
-## Set-up Guide
+## ⚙️ Set-up Guide
 1) Ensure the following project structure exists above
 2) Build the docker image
 ```
