@@ -67,37 +67,37 @@ order_delays <- dbGetQuery(con, "SELECT * FROM order_delays;")
 
 #Remove the word "days"
 order_data_20200101_20200701 <- order_data_20200101_20200701 %>%
-  mutate(estimated arrival = estimated arrival %>%
+  mutate(`estimated arrival` = `estimated arrival` %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20200701_20211001 <- order_data_20200701_20211001 %>%
-  mutate(estimated arrival = estimated arrival %>%
+  mutate(`estimated arrival` = `estimated arrival` %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20211001_20220101 <- order_data_20211001_20220101 %>%
-  mutate(estimated arrival = estimated arrival %>%
+  mutate(`estimated arrival` = `estimated arrival` %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20220101_20221201 <- order_data_20220101_20221201 %>%
-  mutate(estimated arrival = estimated arrival %>%
+  mutate(`estimated arrival` = `estimated arrival` %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20221201_20230601 <- order_data_20221201_20230601 %>%
-  mutate(estimated arrival = estimated arrival %>%
+  mutate(`estimated arrival` = `estimated arrival` %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20230601_20240101 <- order_data_20230601_20240101 %>%
-  mutate(estimated arrival = estimated arrival %>%
+  mutate(`estimated arrival` = `estimated arrival` %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
