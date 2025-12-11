@@ -23,6 +23,7 @@ group8_shopzada/
 │   ├── merge.sql                             # ← Provided in sql/
 │   └── create_facts.sql                      # ← Provided in sql/
 │   └── create_dims.sql                       # ← Provided in sql/
+│   └── create_views.sql                       # ← Provided in sql/
 ```
 
 ## ⚙️ Set-up Guide
