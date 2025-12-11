@@ -67,6 +67,11 @@ with DAG(
         sql="create_fact.sql"
     )
 
+    create_views_sql = PostgresOperator(
+        task_id="create_views",
+        postgres_conn_id="airflow_postgres",
+        sql="create_views.sql"
+    )
 
 
-    ingestion_tasks>>r_cleaning>>merge_data_sql>>create_dims_sql>>create_fact_sql
+    ingestion_tasks>>r_cleaning>>merge_data_sql>>create_dims_sql>>create_fact_sql>>create_views_sql
