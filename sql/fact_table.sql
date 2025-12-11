@@ -57,4 +57,35 @@ LEFT JOIN dim_staff AS staff
 LEFT JOIN dim_merchant AS merchant
 		ON oms.merchant_id = merchant.merchant_id;
 
+ALTER TABLE fact_order
+	ADD CONSTRAINT fact_order_pk PRIMARY KEY (order_reference_number);
+
+ALTER TABLE fact_order
+	ALTER COLUMN order_reference_number SET NOT NULL,
+	ALTER COLUMN user_reference_number SET NOT NULL,
+	ALTER COLUMN campaign_reference_number SET NOT NULL,
+	ALTER COLUMN staff_reference_number SET NOT NULL,
+	ALTER COLUMN product_reference_number SET NOT NULL,
+	ALTER COLUMN merchant_reference_number SET NOT NULL,
+	ALTER COLUMN order_id SET NOT NULL,
+	ALTER COLUMN transaction_date SET NOT NULL,
+	ALTER COLUMN price SET NOT NULL,
+	ALTER COLUMN quantity SET NOT NULL;
+
+ALTER TABLE fact_order
+	ALTER TABLE fact_order
+	ADD CONSTRAINT fk_fact_order_user
+	FOREIGN KEY (user_reference_number) REFERENCES dim_user (user_reference_number),
+
+	ADD CONSTRAINT fk_fact_order_product
+	FOREIGN KEY (product_reference_number) REFERENCES dim_product (product_reference_number),
+
+	ADD CONSTRAINT fk_fact_order_campaign
+	FOREIGN KEY (campaign_reference_number) REFERENCES dim_campaign (campaign_reference_number),
+
+	ADD CONSTRAINT fk_fact_order_staff
+	FOREIGN KEY (staff_reference_number) REFERENCES dim_staff (staff_reference_number),
+
+	ADD CONSTRAINT fk_fact_order_merchant
+	FOREIGN KEY (merchant_reference_number) REFERENCES dim_merchant (merchant_reference_number);
 
