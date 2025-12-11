@@ -213,7 +213,7 @@ campaign_data <- campaign_data %>%
 
 #Removing the word "days" from estimated arrival column
 transactional_campaign_data <- transactional_campaign_data %>%
-  mutate(estimated arrival = estimated arrival %>%
+  mutate(`estimated arrival` = `estimated arrival` %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
