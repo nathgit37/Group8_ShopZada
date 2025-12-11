@@ -73,7 +73,6 @@ ALTER TABLE fact_order
 	ALTER COLUMN quantity SET NOT NULL;
 
 ALTER TABLE fact_order
-	ALTER TABLE fact_order
 	ADD CONSTRAINT fk_fact_order_user
 	FOREIGN KEY (user_reference_number) REFERENCES dim_user (user_reference_number),
 
