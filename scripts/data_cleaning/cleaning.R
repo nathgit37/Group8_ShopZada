@@ -30,6 +30,8 @@ con <- dbConnect(
 )
 
 dbListTables(con)
+print("Connected to Postgres starting to clean the departments...")
+
 
 #CUSTOMER DEPARTMENT ====
 user_data <- dbGetQuery(con, "SELECT * FROM user_data;")
@@ -352,3 +354,4 @@ dbWriteTable(con, "order_data_20220101_20221201", order_data_20220101_20221201, 
 dbWriteTable(con, "order_data_20221201_20230601", order_data_20221201_20230601, overwrite = TRUE)
 dbWriteTable(con, "order_data_20230601_20240101", order_data_20230601_20240101, overwrite = TRUE)
 dbWriteTable(con, "order_delays", order_delays, overwrite = TRUE)
+print("Departments successfully ingested back to Postgre!")
