@@ -22,11 +22,11 @@ library(lubridate)
 # Connect R to db ====
 con <- dbConnect(
   RPostgres::Postgres(),
-  dbname = "mydatabase",
-  host = "localhost",
-  port = 5433,
-  user = "root",
-  password = "12345"
+  dbname = "airflow",
+  host = "postgres",
+  port = 5432,
+  user = "airflow",
+  password = "airflow"
 )
 
 dbListTables(con)
@@ -46,6 +46,8 @@ user_data$creation_date <- ymd_hms(user_data$creation_date)
 user_data$creation_date <- as_date(user_data$creation_date)
 user_data$user_type <- as.factor(user_data$user_type)
 
+print("Customer Department has been cleaned!"
+
 #OPERATIONS DEPARTMENT ====
 line_item_data_prices1 <- dbGetQuery(con, "SELECT * FROM line_item_data_prices1;")
 line_item_data_prices2 <- dbGetQuery(con, "SELECT * FROM line_item_data_prices2;")
@@ -63,37 +65,37 @@ order_delays <- dbGetQuery(con, "SELECT * FROM order_delays;")
 
 #Remove the word "days"
 order_data_20200101_20200701 <- order_data_20200101_20200701 %>%
-  mutate(`estimated arrival` = `estimated arrival` %>%
+  mutate(estimated arrival = estimated arrival %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20200701_20211001 <- order_data_20200701_20211001 %>%
-  mutate(`estimated arrival` = `estimated arrival` %>%
+  mutate(estimated arrival = estimated arrival %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20211001_20220101 <- order_data_20211001_20220101 %>%
-  mutate(`estimated arrival` = `estimated arrival` %>%
+  mutate(estimated arrival = estimated arrival %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20220101_20221201 <- order_data_20220101_20221201 %>%
-  mutate(`estimated arrival` = `estimated arrival` %>%
+  mutate(estimated arrival = estimated arrival %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20221201_20230601 <- order_data_20221201_20230601 %>%
-  mutate(`estimated arrival` = `estimated arrival` %>%
+  mutate(estimated arrival = estimated arrival %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
 
 order_data_20230601_20240101 <- order_data_20230601_20240101 %>%
-  mutate(`estimated arrival` = `estimated arrival` %>%
+  mutate(estimated arrival = estimated arrival %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
@@ -195,6 +197,8 @@ order_data_20220101_20221201$transaction_date <- ymd(order_data_20220101_2022120
 order_data_20221201_20230601$transaction_date <- ymd(order_data_20221201_20230601$transaction_date)
 order_data_20230601_20240101$transaction_date <- ymd(order_data_20230601_20240101$transaction_date)
 
+print("Operations Department has been cleaned!")
+
 #MARKETING DEPARTMENT ====
 campaign_data <- dbGetQuery(con, "SELECT * FROM campaign_data;")
 transactional_campaign_data <- dbGetQuery(con, "SELECT * FROM transactional_campaign_data;")
@@ -207,7 +211,7 @@ campaign_data <- campaign_data %>%
 
 #Removing the word "days" from estimated arrival column
 transactional_campaign_data <- transactional_campaign_data %>%
-  mutate(`estimated arrival` = `estimated arrival` %>%
+  mutate(estimated arrival = estimated arrival %>%
            gsub("days?|Days?", "", .) %>%
            trimws() %>%
            as.numeric())
@@ -227,6 +231,9 @@ campaign_data <- campaign_data %>%
 # Correcting the data types
 transactional_campaign_data$transaction_date <- ymd(transactional_campaign_data$transaction_date)
 transactional_campaign_data$transaction_date <- as.factor(transactional_campaign_data$transaction_date)
+
+print("Marketing Department has been cleaned!")
+
 
 #ENTERPRISE DEPARTMENT ====
 merchant_data <- dbGetQuery(con, "SELECT * FROM merchant_data;")
@@ -283,6 +290,8 @@ merchant_data$creation_date <- as_date(merchant_data$creation_date)
 staff_data$creation_date <- ymd_hms(staff_data$creation_date)
 staff_data$creation_date <- as_date(staff_data$creation_date)
 
+print("Enterprise Department has been cleaned!")
+
 #BUSINESS DEPARTMENT ====
 product_list <- dbGetQuery(con, "SELECT * FROM product_list;")
 
@@ -305,6 +314,8 @@ product_list <- product_list %>%
     product_type == "readymade_dinner" ~ "readymade_food",
     TRUE ~ product_type)
   )
+
+print("Business Department has been cleaned!")
 
 #
 # PUTTING IT BACK INTO POSTGRE ====
