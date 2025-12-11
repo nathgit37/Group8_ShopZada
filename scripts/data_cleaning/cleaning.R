@@ -48,7 +48,7 @@ user_data$creation_date <- ymd_hms(user_data$creation_date)
 user_data$creation_date <- as_date(user_data$creation_date)
 user_data$user_type <- as.factor(user_data$user_type)
 
-print("Customer Department has been cleaned!"
+print("Customer Department has been cleaned!")
 
 #OPERATIONS DEPARTMENT ====
 line_item_data_prices1 <- dbGetQuery(con, "SELECT * FROM line_item_data_prices1;")
