@@ -55,7 +55,7 @@ ORDER BY Number_Orders DESC;
 CREATE VIEW campaign_profit AS
 SELECT 
 	c.campaign_id,
-	SUM(o.quantity * o.price) AS profit
+	SUM(o.quantity * o.price * c.campaign_discount) AS profit
 FROM dim_campaign AS c
 LEFT JOIN fact_order AS o
 ON o.campaign_reference_number = c.campaign_reference_number
