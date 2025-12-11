@@ -34,11 +34,10 @@ ORDER BY profit DESC;
 -- Sales Trend
 CREATE VIEW sales_trend AS
 SELECT
-	EXTRACT(MONTH FROM transaction_date) AS MonthNumber,
-	EXTRACT(YEAR FROM transaction_date) AS YearNumber,
+	transaction_date,
 	SUM(quantity * price) AS profit
 FROM fact_order
-GROUP BY MonthNumber, YearNumber
+GROUP BY transaction_date
 ORDER BY profit DESC;
 
 -- Performance By Staff
