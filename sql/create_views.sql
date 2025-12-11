@@ -63,3 +63,14 @@ WHERE o.availed LIKE 'Availed'
 GROUP BY c.campaign_id
 ORDER BY profit DESC;
 
+-- Order by User Country Data
+CREATE VIEW order_by_country_user AS
+SELECT
+	u.user_country AS country,
+	COUNT(o.user_reference_number) AS count_orders
+FROM dim_user AS u
+LEFT JOIN fact_order AS o
+ON u.user_reference_number = o.user_reference_number
+GROUP BY country
+ORDER BY count_orders DESC;
+
