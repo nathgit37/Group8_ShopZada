@@ -43,4 +43,11 @@ Username: admin
 Password: admin
 ```
 5) Trigger the DAG.
-6) 
+6) To access the dashboards, download 'ShopZada Profit Dashboard.twb' provided in dashboard/
+7) To connect to postgre in Tableau, sign in as:
+```
+Username: airflow
+Password: airflow
+
+NOTE: Edit the connection to whichever port you are using, default is 5433
+```
