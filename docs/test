@@ -1,0 +1,125 @@
+# Part 3: Data Dictionary
+
+---
+
+## 1. FACT_ORDER
+
+**Purpose:** Stores transactional order data and links to related dimension tables.
+
+### Columns
+
+| Column Name | Data Type | Description |
+|------------|----------|-------------|
+| order_reference_number | BIGINT | Surrogate key uniquely identifying each order record in the fact table. |
+| product_reference_number | BIGINT | Foreign key linking to the DIM_PRODUCT table. |
+| campaign_reference_number | BIGINT | Foreign key linking to the DIM_CAMPAIGN table. |
+| staff_reference_number | BIGINT | Foreign key linking to the DIM_STAFF table. |
+| merchant_reference_number | BIGINT | Foreign key linking to the DIM_MERCHANT table. |
+| user_reference_number | BIGINT | Foreign key linking to the DIM_USER table. |
+| order_id | TEXT | Original order ID from the source system. |
+| order_date | DATE | Date when the order was placed. |
+| quantity | DOUBLE PRECISION | Quantity of items ordered. |
+| price | DOUBLE PRECISION | Price per item and total price calculation. |
+| estimated_arrival | DOUBLE PRECISION | Estimated delivery time. |
+| delay_in_days | BIGINT | Number of days the delivery was delayed. |
+| availed | TEXT | Indicates whether a promotion or service was availed. |
+| transaction_date | DATE | Date when the transaction was completed. |
+
+---
+
+## 2. DIM_PRODUCT
+
+**Purpose:** Stores product-related descriptive information.
+
+### Columns
+
+| Column Name | Data Type | Description |
+|------------|----------|-------------|
+| product_reference_number | BIGINT | Surrogate key uniquely identifying each product. |
+| product_id | TEXT | Original product ID from the source system. |
+| product_name | TEXT | Name of the product. |
+| product_type | TEXT | Category or type of product. |
+
+---
+
+## 3. DIM_CAMPAIGN
+
+**Purpose:** Stores marketing campaign details.
+
+### Columns
+
+| Column Name | Data Type | Description |
+|------------|----------|-------------|
+| campaign_reference_number | BIGINT | Surrogate key uniquely identifying each campaign. |
+| campaign_id | TEXT | Original campaign ID from the source system. |
+| campaign_name | TEXT | Name of the campaign. |
+| campaign_description | TEXT | Detailed description of the campaign. |
+| campaign_discount | DOUBLE PRECISION | Discount amount offered by the campaign. |
+
+---
+
+## 4. DIM_STAFF
+
+**Purpose:** Stores staff information related to order processing and operations.
+
+### Columns
+
+| Column Name | Data Type | Description |
+|------------|----------|-------------|
+| staff_reference_number | BIGINT | Surrogate key uniquely identifying each staff member. |
+| staff_id | TEXT | Original staff ID from the source system. |
+| staff_name | TEXT | Full name of the staff member. |
+| staff_job_level | TEXT | Job position or level of the staff member. |
+| staff_street | TEXT | Street address of the staff member. |
+| staff_state | TEXT | State of residence of the staff member. |
+| staff_city | TEXT | City of residence of the staff member. |
+| staff_country | TEXT | Country of residence of the staff member. |
+| staff_contact_number | TEXT | Contact number of the staff member. |
+| staff_creation_date | DATE | Date when the staff account was created. |
+
+---
+
+## 5. DIM_MERCHANT
+
+**Purpose:** Stores merchant information associated with customer orders.
+
+### Columns
+
+| Column Name | Data Type | Description |
+|------------|----------|-------------|
+| merchant_reference_number | BIGINT | Surrogate key uniquely identifying each merchant. |
+| merchant_id | TEXT | Original merchant ID from the source system. |
+| merchant_name | TEXT | Name of the merchant. |
+| merchant_state | TEXT | State where the merchant operates. |
+| merchant_street | TEXT | Street address of the merchant. |
+| merchant_country | TEXT | Country where the merchant operates. |
+| merchant_contact_number | TEXT | Contact number of the merchant. |
+| merchant_creation_date | DATE | Date when the merchant account was created. |
+| merchant_city | TEXT | City where the merchant operates. |
+
+---
+
+## 6. DIM_USER
+
+**Purpose:** Stores user demographic, account, and device information.
+
+### Columns
+
+| Column Name | Data Type | Description |
+|------------|----------|-------------|
+| user_reference_number | BIGINT | Surrogate key uniquely identifying each user. |
+| user_id | TEXT | Original user ID from the source system. |
+| user_name | TEXT | Full name of the user. |
+| user_credit_card_number | BIGINT | Credit card number of the user. |
+| user_issuing_bank | TEXT | Bank that issued the credit card. |
+| user_job_title | TEXT | Job title of the user. |
+| user_job_level | TEXT | Job rank or level of the user. |
+| user_creation_date | DATE | Date when the user account was created. |
+| user_street | TEXT | Street address of the user. |
+| user_state | TEXT | State of residence of the user. |
+| user_city | TEXT | City of residence of the user. |
+| user_country | TEXT | Country of residence of the user. |
+| user_birthdate | TEXT | Date and time of birth of the user. |
+| user_gender | TEXT | Gender of the user. |
+| user_device_address | TEXT | IP address of the user's device. |
+| user_type | TEXT | Membership type of the user. |
