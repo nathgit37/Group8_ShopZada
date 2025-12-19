@@ -1,6 +1,16 @@
 # 🛒 Group8_ShopZada
 Github repository for Group 8's ShopZada Data Warehouse
 
+### Group Members
+
+ACOSTA, Raphael Zeth
+
+ALMODAL, Leila Beatriz
+
+MENDOZA, Ericka Eunice
+
+REYES, Nathan Emmanuel
+
 ## 🗃️ Directory 
 ```
 group8_shopzada/
